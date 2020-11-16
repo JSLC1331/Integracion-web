@@ -12,58 +12,240 @@
 	<script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
 	
     <script>
-        var texture = new THREE.TextureLoader().load( "tierra.jpg" );
-		var texture1 = new THREE.TextureLoader().load( "nm.png" );
-		var texture2 = new THREE.TextureLoader().load( "texturabalon.jpg" );
+		//Se cargan las texturas que se aplicarán posteriormente en los objetos que usen en el escenario.
+        var text_arbol = new THREE.TextureLoader().load( "madera.jpg" );
+		var text_mina = new THREE.TextureLoader().load( "roca.jpg" );
+		var text_casa = new THREE.TextureLoader().load( "casat2.jpg" );
+		var text_taladro = new THREE.TextureLoader().load( "metal.jpg" );
+        var text_edificio = new THREE.TextureLoader().load("edificiot.jpg");
+        var text_suelo = new THREE.TextureLoader().load("suelo.jpg");
+     
+	
+
 		var light = new THREE.DirectionalLight( 0xffffff, 1 );
 		light.position.set( -20, 20, 20 );
 		
-		
+		//Diferentes ajustes que se hacen sobre el escenario.
 		var scene = new THREE.Scene();
         var aspect = window.innerWidth / window.innerHeight;
         var camera = new THREE.PerspectiveCamera( 75, aspect, 0.1, 1000 );
         var renderer = new THREE.WebGLRenderer();
         renderer.setSize( window.innerWidth, window.innerHeight );
-        document.body.appendChild( renderer.domElement );
+        document.body.appendChild( renderer.domElement );		
+		scene.add(light);	
 		
-		
-		
-		scene.add(light);
-		
-		
-		
-		
-		
-		var geo = new THREE.SphereGeometry( 2, 24, 16 );
-		var materials = new THREE.MeshBasicMaterial({map: texture});
-	        var materials = new THREE.MeshPhongMaterial({color: 0xaaaaaa, specular: 0x333333, shininess: 15, map: texture, normalMap: texture1}) //, specularMap: specMap,normalMap: normalMap});
-		
-		var sphere = new THREE.Mesh( geo, materials );
-		sphere.position.x = -5;
-        scene.add( sphere );
-		
+	
+		//Posicionamiento de la cámara en el escenario
+        camera.position.z = 40;		
+		//Permiten movernos con el ratón a través del escenario para ver mejor los elementos que lo conforman.
+		controls = new THREE.OrbitControls(camera, renderer.domElement);
 
-        var geometry = new THREE.BoxGeometry( 1, 1, 1 );
-        var material = new THREE.MeshNormalMaterial();
-        var cube = new THREE.Mesh( geometry, material );
-        scene.add( cube );
-        camera.position.z = 5;
-		controls = new THREE.OrbitControls( camera, renderer.domElement );
-		
-		var loader = new THREE.ObjectLoader();
 
-		loader.load("bola1.json", function( group ) {
-		mesh = group.children[0];
-			mesh.material = new THREE.MeshPhongMaterial({map: texture2});
-			mesh.position.x = 5;
-			scene.add( mesh );
+		//---------------------------------------------------------------------------- CASAS ------------------------------------------------------------------------------
+		//Sección donde se carga y luego se dibuja la malla de las casas.		
+		var loader_casa = new THREE.ObjectLoader();
+
+		loader_casa.load("casa.json", function( group ) {
+		casa = group.children[0];
+			casa.material = new THREE.MeshPhongMaterial({map: text_casa});
+			casa.scale.set(0.5, 0.5, 0.5);
+			casa.position.x = 5;
+			casa.position.z = -20;
+			scene.add( casa );
 		});
-		
 
+        //Sección donde se carga y luego se dibuja la malla de las casas.		
+        var loader_casa1 = new THREE.ObjectLoader();
+
+        loader_casa1.load("casa.json", function (group) {
+            casa1 = group.children[0];
+            casa1.material = new THREE.MeshPhongMaterial({ map: text_casa });
+            casa1.scale.set(0.5, 0.5, 0.5);
+            casa1.position.x = 25;
+            casa1.position.z = -24;
+            scene.add(casa1);
+		});
+
+        var loader_casa2 = new THREE.ObjectLoader();
+
+        loader_casa2.load("casa.json", function (group) {
+            casa2 = group.children[0];
+            casa2.material = new THREE.MeshPhongMaterial({ map: text_casa });
+            casa2.scale.set(0.5, 0.5, 0.5);
+            casa2.position.x = 35;
+            casa2.position.z = -45;
+            scene.add(casa2);
+		});
+
+        var loader_casa3 = new THREE.ObjectLoader();
+
+        loader_casa3.load("casa.json", function (group) {
+            casa3 = group.children[0];
+            casa3.material = new THREE.MeshPhongMaterial({ map: text_casa });
+            casa3.scale.set(0.5, 0.5, 0.5);
+            casa3.position.x = -10;
+            casa3.position.z = -55;
+            scene.add(casa3);
+        });
+		//-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+		//------------------------------------------------------------------------------EDIFICIOS--------------------------------------------------------------------------
+		//Sección donde se carga y luego se dibuja la malla de los edificios.	
+		var loader_edi = new THREE.ObjectLoader();
+
+		loader_edi.load("edificio.json", function( group ) {
+		edificio = group.children[0];
+			edificio.material = new THREE.MeshPhongMaterial({map: text_edificio});
+			edificio.scale.set(0.5, 0.5, 0.5);
+			edificio.position.x = 20;
+			edificio.position.z = -30;
+			edificio.position.y = 3;
+			scene.add( edificio );
+		});
+
+        var loader_edi1 = new THREE.ObjectLoader();
+
+        loader_edi1.load("edificio.json", function (group) {
+            edificio1 = group.children[0];
+            edificio1.material = new THREE.MeshPhongMaterial({ map: text_edificio });
+            edificio1.scale.set(0.5, 0.5, 0.5);
+            edificio1.position.x = 10;
+            edificio1.position.z = -45;
+            edificio1.position.y = 3;
+            scene.add(edificio1);
+		});
+
+        var loader_edi2 = new THREE.ObjectLoader();
+
+        loader_edi2.load("edificio.json", function (group) {
+            edificio2 = group.children[0];
+            edificio2.material = new THREE.MeshPhongMaterial({ map: text_edificio });
+            edificio2.scale.set(0.5, 0.5, 0.5);
+            edificio2.position.x = 5;
+            edificio2.position.z = -25;
+            edificio2.position.y = 3;
+            scene.add(edificio2);
+        });
+		//-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        //--------------------------------------------------------------------------------TALADRO--------------------------------------------------------------------------
+		//Sección donde se carga y luego se dibuja la malla de las máquinas con taladro.
+		var loader_tal = new THREE.ObjectLoader();
+
+		loader_tal.load("model.json", function( group ) {
+		taladro = group.children[0];
+			taladro.material = new THREE.MeshPhongMaterial({map: text_taladro});
+			taladro.scale.set(1.5, 1.5, 1.5);
+			taladro.position.x = -10;
+			taladro.position.z = 7;
+			scene.add(taladro);
+		});
+		//--------------------------------------------------------------------------------ÁRBOLES--------------------------------------------------------------------------
+		//Sección donde se carga y luego se dibuja la malla de los árboles.		
+		var loader_arb = new THREE.ObjectLoader();
+
+		loader_arb.load("arbol.json", function( group ) {
+		arbol = group.children[0];
+			arbol.material = new THREE.MeshPhongMaterial({map: text_arbol});
+			arbol.scale.set(0.5, 0.5, 0.5);
+			arbol.position.x = -25;
+			arbol.position.z = -20;
+			arbol.position.y = 10;
+			scene.add( arbol );
+		});
+
+        var loader_arb1 = new THREE.ObjectLoader();
+
+        loader_arb1.load("arbol.json", function (group) {
+            arbol1 = group.children[0];
+            arbol1.material = new THREE.MeshPhongMaterial({ map: text_arbol });
+            arbol1.scale.set(0.5, 0.5, 0.5);
+            arbol1.position.x = -32;
+            arbol1.position.z = -28;
+            arbol1.position.y = 10;
+            scene.add(arbol1);
+        });
+
+        var loader_arb2 = new THREE.ObjectLoader();
+
+        loader_arb2.load("arbol.json", function (group) {
+            arbol2 = group.children[0];
+            arbol2.material = new THREE.MeshPhongMaterial({ map: text_arbol });
+            arbol2.scale.set(0.5, 0.5, 0.5);
+            arbol2.position.x = -45;
+            arbol2.position.z = -35;
+            arbol2.position.y = 10;
+            scene.add(arbol2);
+        });
+
+        var loader_arb3 = new THREE.ObjectLoader();
+
+        loader_arb3.load("arbol.json", function (group) {
+            arbol3 = group.children[0];
+            arbol3.material = new THREE.MeshPhongMaterial({ map: text_arbol });
+            arbol3.scale.set(0.5, 0.5, 0.5);
+            arbol3.position.x = -55;
+            arbol3.position.z = -46;
+            arbol3.position.y = 10;
+            scene.add(arbol3);
+        });
+
+
+        var loader_arb4 = new THREE.ObjectLoader();
+
+        loader_arb4.load("arbol.json", function (group) {
+            arbol4 = group.children[0];
+            arbol4.material = new THREE.MeshPhongMaterial({ map: text_arbol });
+            arbol4.scale.set(0.5, 0.5, 0.5);
+            arbol4.position.x = -50;
+            arbol4.position.z = -20;
+            arbol4.position.y = 10;
+            scene.add(arbol4);
+        });
+
+        var loader_arb5 = new THREE.ObjectLoader();
+
+        loader_arb5.load("arbol.json", function (group) {
+            arbol5 = group.children[0];
+            arbol5.material = new THREE.MeshPhongMaterial({ map: text_arbol });
+            arbol5.scale.set(0.5, 0.5, 0.5);
+            arbol5.position.x = -27;
+            arbol5.position.z = -47;
+            arbol5.position.y = 10;
+            scene.add(arbol5);
+        });
+		//-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        //--------------------------------------------------------------------------------MINA--------------------------------------------------------------------------
+        //Sección donde se carga y luego se dibuja la malla de la mina.		
+        var loader_mina = new THREE.ObjectLoader();
+
+        loader_mina.load("mina.json", function (group) {
+            mina = group.children[0];
+            mina.material = new THREE.MeshPhongMaterial({ map: text_mina });
+            mina.scale.set(0.7, 0.7, 0.7);
+            mina.position.x = -10;
+            mina.position.z = 40;
+            mina.position.y = -3;
+            scene.add(mina);
+        });
+
+        //--------------------------------------------------------------------------------SUELO--------------------------------------------------------------------------
+        //Sección donde se carga y luego se dibuja la malla de el suelo o superficio donde están todos los objetos.	
+        var loader_suelo = new THREE.ObjectLoader();
+
+        loader_suelo.load("mina.json", function (group) {
+            suelo = group.children[0];
+            suelo.material = new THREE.MeshPhongMaterial({ map: text_suelo });
+            suelo.scale.set(2, 2, 2);
+            suelo.position.x = 0;
+            suelo.position.z = 0;
+            suelo.position.y = -7;
+            scene.add(suelo);
+        });
+        //---------------------------------------------------------------------------------------------------------------------------------------------------------------
         var render = function () {
           requestAnimationFrame( render );
-          cube.rotation.x += 0.1;
-          cube.rotation.y += 0.1;
+         
           renderer.render( scene, camera );
         };
 
